@@ -88,7 +88,7 @@ class TelstraSMS(object):
 
 		try:
 			r = requests.post(REQUEST_MSG_URL, data=json.dumps(params_msg), headers=headers_msg)
-			return r.text
+			return json.loads(r.text)['messageId']
 		except RequestException as e:
 			print(str(e))
 			

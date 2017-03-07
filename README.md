@@ -39,7 +39,25 @@ from telstra_sms_sdk.sms import TelstraSMS
 # CLIENT_SERVER = Consumer Secret
 
 ts = TelstraSMS(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
-ts.send_sms("0400000000", sms_text="Hi this is unit test")
+
+# send a SMS
+messageID = ts.send_sms("0400000000", sms_text="Hi this is unit test")
+
+# check it's status, sample response:
+# {'to': '61400000000', 'receivedTimestamp': '2017-03-08T00:15:55+11:00', 'sentTimestamp': '2017-03-08T00:15:54+11:00', 'status': 'DELIVRD'} 
+
+status = ts.sms_status(messageID)
+
+# get any replies, sample responses:
+# [{'from': '61400000000', 'acknowledgedTimestamp': '2017-03-08T00:03:00+11:00', 'content': 'G'Day cobber'}, {'from': '61400000000', 'acknowledgedTimestamp': '2017-03-08T00:04:00+11:00', 'content': "Stone the crows!}]
+
+responses = ts.sms_response(messageID)
+
+# check your usage quota (useful on the free plan), sample output:
+# {'used': '13', 'available': '987', 'expiry': '2017-03-30T11:00:00+11:00'}
+quota = ts.get_quota()
+
+
 ```
 
 ----
