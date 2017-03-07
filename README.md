@@ -1,16 +1,13 @@
 # telstra-sms-sdk
 
- A fully tested Python SDK allow you to send sms in a more easy way! 
-
-`Current version:` 0.0.7
+ A Python SDK to allow you to send and receive SMS using Telstra API
+ 
+`Current version:` 0.0.8
 `Support Python version`: >=python 2.6 
 
 If you have any questions or issue, please create an issue or pull request.
-
-
-
  
-### Prerequisite 
+### Prerequisites
 
 Before you are using this package, please register an App at https://dev.telstra.com/. The service is normally activated within a fews days, so be patient.
 
@@ -34,9 +31,9 @@ https://pypi.python.org/pypi/telstra-sms-sdk
 from telstra_sms_sdk.sms import TelstraSMS
 
 
-# You can find your CLIENT_ID and CLIENT_SERVER at https://dev.telstra.com/ by selecting My Apps -> APPNAME -> Keys
+# You can find your CLIENT_ID and CLIENT_SECRET at https://dev.telstra.com/ by selecting My Apps -> APPNAME -> Keys
 # CLIENT_ID = Consumer Key
-# CLIENT_SERVER = Consumer Secret
+# CLIENT_SECRET = Consumer Secret
 
 ts = TelstraSMS(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 
@@ -66,6 +63,6 @@ MIT
 
 ----
 ### Contact
-- Email：<arkilis@gmail.com>
 - Email: <github@ryanhunt.net>
+- Credits to <arkilis@gmail.com> for the original version. 
 
