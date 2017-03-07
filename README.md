@@ -39,7 +39,6 @@ from telstra_sms_sdk.sms import TelstraSMS
 # CLIENT_SERVER = Consumer Secret
 
 ts = TelstraSMS(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
-ts.get_token()
 ts.send_sms("0400000000", sms_text="Hi this is unit test")
 ```
 
