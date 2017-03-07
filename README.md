@@ -12,7 +12,7 @@ If you have any questions or issue, please create an issue or pull request.
  
 ### Prerequisite 
 
-Before you are using this lib, please register an App on Telstra at https://dev.telstra.com/. Their sms will be activated within a fews days. So be patient or you can just call them. :)
+Before you are using this package, please register an App at https://dev.telstra.com/. The service is normally activated within a fews days, so be patient.
 
 ----
 ### To Install
@@ -34,7 +34,9 @@ https://pypi.python.org/pypi/telstra-sms-sdk
 from telstra_sms_sdk.sms import TelstraSMS
 
 
-# CLIENT_IDi and CLIENT_SECRET are strings getting from Telstra app  
+# You can find your CLIENT_ID and CLIENT_SERVER at https://dev.telstra.com/ by selecting My Apps -> APPNAME -> Keys
+# CLIENT_ID = Consumer Key
+# CLIENT_SERVER = Consumer Secret
 
 ts = TelstraSMS(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 ts.get_token()
@@ -48,4 +50,5 @@ MIT
 ----
 ### Contact
 - Email：<arkilis@gmail.com>
+- Email: <github@ryanhunt.net>
 

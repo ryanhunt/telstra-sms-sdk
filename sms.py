@@ -1,13 +1,16 @@
 """
-Testral SMS SDK
+Telstra SMS SDK
 
-Austrlian Telstra SMS send utlity. To apply such a service, go https://dev.telstra.com/
+Australian Telstra SMS send utility. To access and use this service, sign up for the required API keys at https://dev.telstra.com/
 
-2016
+Original code by https://github.com/arkilis
+Updated to work with Python 3.4 (latest on Rasbian)
+
+2016, 2017
 License: MIT
 """
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 import requests
 from requests import RequestException
@@ -16,74 +19,75 @@ import json
 REQUEST_TOKEN_URL = "https://api.telstra.com/v1/oauth/token"
 REQUEST_MSG_URL = "https://api.telstra.com/v1/sms/messages"
 
-MSG_TEMPLATE = "Hello, this is a SMS from UniversApp, thanks for using our service! https://universapp.com.au"
+MSG_TEMPLATE = "G'Day you bonza fellas."
 
 
 class TelstraSMS(object):
-    """This class helps setting up the client ID, client secret key
+	"""This class helps setting up the client ID, client secret key
 
-    """
+	"""
 
-    client_id = None
-    client_secret = None
-    token = None
+	client_id = None
+	client_secret = None
+	token = None
 
-    def __init__(self, client_id, client_secret):
-        self.client_id = client_id
-        self.client_secret = client_secret
+	def __init__(self, client_id, client_secret):
+		self.client_id = client_id
+		self.client_secret = client_secret
 
-    def get_token(self):
-        """ get the token from client id and client secret
-        :return: string type of token
-        """
-        if self.client_id is None or self.client_secret is None:
-            return "Invalid client ID or client secret key"
+	def get_token(self):
+		""" get the token from client id and client secret
+		:return: string type of token
+		"""
+		if self.client_id is None or self.client_secret is None:
+			return "Invalid client ID or client secret key"
 
-        # get token
-        token_params = {
-            'client_id': self.client_id,
-            'client_secret': self.client_secret,
-            'grant_type': 'client_credentials',
-            'scope': 'SMS',
-        }
+		# get token
+		token_params = {
+			'client_id': self.client_id,
+			'client_secret': self.client_secret,
+			'grant_type': 'client_credentials',
+			'scope': 'SMS',
+		}
 
-        try:
-            r = requests.post(REQUEST_TOKEN_URL, data=token_params)
-            try:
-                self.token = json.loads(r.content)['access_token']
-                return json.loads(r.content)['access_token']
-            except TypeError as e:
-                print str(e)
-                pass
-        except RequestException as e:
-            print str(e)
-            pass
-        else:
-            return None
+		try:
+			r = requests.post(REQUEST_TOKEN_URL, data=token_params)
+			try:
+				self.token = json.loads(r.text)['access_token']
+				return json.loads(r.text)['access_token']
+			except TypeError as e:
+				print(str(e))
+				pass
+		except RequestException as e:
+			print(str(e))
+			pass
+		else:
+			return None
 
-    def send_sms(self, num, sms_text="Sample Text"):
-        """send sms message"""
+	def send_sms(self, num, sms_text="Hello world."):
+		"""send sms message"""
 
-        if self.token is None:
-            return "Invalid token ", self.token
+		if self.token is None:
+			return "Invalid token ", self.token
 
-        if len(num) != 10:
-            return "Invalid Australian Phone number"
+		if len(num) != 10:
+			# this assumes the numbers are in the format of 04xxxxxxxx. Make sure you format accordingly beforehand. 
+			return "Invalid Australian Phone number"
 
-        headers_msg = {
-            'Authorization': 'Bearer {0}'.format(self.token)
-        }
+		headers_msg = {
+			'Authorization': 'Bearer {0}'.format(self.token)
+		}
 
-        params_msg = {
-            'to': num,
-            'body': sms_text,
-        }
+		params_msg = {
+			'to': num,
+			'body': sms_text,
+		}
 
-        try:
-            r = requests.post(REQUEST_MSG_URL, data=json.dumps(params_msg), headers=headers_msg)
-            return r
-        except RequestException as e:
-            print str(e)
+		try:
+			r = requests.post(REQUEST_MSG_URL, data=json.dumps(params_msg), headers=headers_msg)
+			return r
+		except RequestException as e:
+			print(str(e))
 
 
 
